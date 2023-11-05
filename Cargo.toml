@@ -1,0 +1,37 @@
+[package]
+name = "xdiff-live"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "xdiff-live"
+path = "src/bin/xdiff.rs"
+
+[[bin]]
+name = "xreq-live"
+path = "src/bin/xreq.rs"
+
+[dependencies] # cargo add
+anyhow = "1.0.71"
+async-trait = "0.1.71"
+atty = "0.2.14"
+clap = { version = "4.3.11", features = ["derive"] }
+console = "0.15.7"
+dialoguer = "0.10.4"
+http-serde = "1.1.2"
+reqwest = { version = "0.11.18", default-features = false, features = ["rustls-tls"] }
+serde = { version = "1.0.171", features = ["derive"] }
+serde_json = "1.0.102"
+serde_qs = "0.12.0"
+serde_urlencoded = "0.7.1"
+# cargo add reqwest --features rustls --no-default-features
+serde_yaml = "0.9.21"
+similar = { version = "2.2.1", features = ["inline"] }
+syntect = "5.0.0"
+tokio = { version = "1.29.1", features = ["full"] }
+url = { version = "2.4.0", features = ["serde"] }
+
+[dev-dependencies] # cargo add --dev
+mockito = "0.31.0"
+trycmd = "0.14.16"

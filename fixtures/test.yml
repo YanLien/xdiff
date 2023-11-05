@@ -1,0 +1,83 @@
+# 用“ --- ”即三个破折号表示一份内容的开始
+# 用“ ... ”即三个小数点表示一份内容的结束（非必需）
+# 字符串一般不需要用引号包裹，但是如果字符串中使用了反斜杠“\”开头的转义字符就必须使用引号包裹
+# 较为复杂的对象格式，可以使用问号加一个空格代表一个复杂的 key，配合一个冒号加一个空格代表一个 value
+# 使用竖线符“ | ”来表示该语法，每行的缩进和行尾空白都会被去掉，而额外的缩进会被保留
+# 使用右尖括号“ > ”来表示该语法，只有空白行才会被识别为换行，原来的换行符都会被转换成空格
+# YAML 也支持 ISO 8601 格式的时间数据
+# YAML 支持使用严格类型标签“!!”（双感叹号+目标类型）来强制转换类型
+# 数据重用和合并
+## 为了保持内容的简洁，避免过多重复的定义，YAML 提供了由锚点标签“&”和引用标签“*”组成的语法，利用这套语法可以快速引用相同的一些数据...
+## 配合合并标签“<<”使用可以与任意数据进行合并，你可以把这套操作想象成面向对象语言中的继承...
+---
+todo:  # Profile
+  req1:
+    url: https://jsonplaceholder.typicode.com/todos/1
+    params: 
+      a: 100
+      # "abcd"
+  req2:
+    url: https://jsonplaceholder.typicode.com/todos/2
+    params:
+      c: 200
+  res:
+    skip_headers:
+      - report-to
+      - date
+      - x-ratelimit-remaining
+      - x-ratelimit-reset
+      - cf-ray
+      - age
+    skip_body:
+      - id
+
+rust:  # Profile
+  req1:
+    method: GET
+    url: https://www.rust-lang.org/
+    headers:
+      user-agent: Aloha
+    params:
+      hello: world
+      # "bvuvf "
+  req2:
+    method: GET
+    url: https://www.rust-lang.org/
+    params: {}
+  res:
+    skip_headers:
+      - set-cookie
+      - date
+      - via
+      - x-amz-cf-id
+
+# 小bug：上面出错下面正确可能会出现，运行出错（修复一下）
+# generate函数执行过程中出现重复问题的处理
+
+# Header：
+# HTTP Header 是位于请求和响应的头部，用于携带一些元数据信息。
+# Header 是键值对的形式，每个 Header 都由一个名称（键）和一个对应的值组成。
+# 例如，常见的 Header 包括 User-Agent、Content-Type、Authorization 等。
+
+# 在 Rust 的 HTTP 库中，例如 reqwest 或 hyper，你可以通过提供一个包含 Header 
+# 的 HashMap 或其他支持类似格式的结构体来添加自定义的 Header 到请求中。
+# 对于服务器端，可以通过解析 HTTP 请求的 Header 来获取客户端传递的数据。
+
+# Query：
+# HTTP Query 是指 URL 中的查询字符串部分，通常出现在 URL 的问号 ? 后面。
+# 它也是由键值对组成的，多个键值对之间使用 & 符号分隔。
+# 例如，http://example.com/search?query=rust&page=1 中的 
+# query=rust&page=1 就是一个查询字符串。
+
+# 在 Rust 的 HTTP 库中，对于客户端请求，你可以通过提供一个类似 reqwest 
+# 的库来构建带有查询字符串的 URL，或者直接拼接字符串来生成带有查询字符串的 URL。
+# 对于服务器端，可以通过解析 URL 中的查询字符串来获取客户端传递的数据。
+
+# Body：
+# HTTP Body 是请求或响应中的主体部分，它用于传输实际的数据内容。在请求中，Body 
+# 通常用于 POST、PUT 等方法中携带表单数据、JSON 数据、上传文件等。在响应中，Body 
+# 包含服务器返回的实际数据，例如 HTML 内容、JSON 数据等。
+
+# 在 Rust 的 HTTP 库中，对于客户端请求，你可以通过提供一个包含 Body 内容的结构体
+# 或直接提供字符串、字节数组等数据来发送请求。对于服务器端，可以通过读取请求的 Body 
+# 来获取客户端传递的数据。

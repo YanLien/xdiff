@@ -1,0 +1,95 @@
+DiffConfig { 
+    profiles: {
+        "todo": DiffProfile { 
+            req1: RequestProfile { 
+                method: GET, 
+                url: Url {   
+                        scheme: "https", 
+                        cannot_be_a_base: false, 
+                        username: "", 
+                        password: None, 
+                        host: Some(Domain("jsonplaceholder.typicode.com")), 
+                        port: None, 
+                        path: "/todos/1", 
+                        query: None, 
+                        fragment: None 
+                    }, 
+                params: Some(Object {"a": Number(100)}), 
+                headers: {}, 
+                body: None 
+            }, 
+            req2: RequestProfile { 
+                method: GET, 
+                url: Url { 
+                    scheme: "https", 
+                    cannot_be_a_base: false, 
+                    username: "", 
+                    password: None, 
+                    host: Some(Domain("jsonplaceholder.typicode.com")), 
+                    port: None, 
+                    path: "/todos/2", 
+                    query: None, 
+                    fragment: None 
+                }, 
+                params: Some(Object {"c": Number(200)}), 
+                headers: {}, 
+                body: None 
+            }, 
+            res: ResponseProfile { 
+                skip_headers: ["report-to", "date"], 
+                skip_body: ["id"] 
+            } 
+        }, 
+        "rust": DiffProfile { 
+            req1: RequestProfile { 
+                method: GET, 
+                url: Url { 
+                    scheme: "https", 
+                    cannot_be_a_base: false, 
+                    username: "", 
+                    password: None, 
+                    host: Some(Domain("www.rust-lang.org")), 
+                    port: None, 
+                    path: "/", 
+                    query: None, 
+                    fragment: None 
+                }, 
+                params: Some(Object {"hello": String("world")}), 
+                headers: {"user-agent": "Aloha"}, 
+                body: None 
+            }, 
+            req2: RequestProfile { 
+                method: GET, 
+                url: Url { 
+                    scheme: "https", 
+                    cannot_be_a_base: false, 
+                    username: "", 
+                    password: None, 
+                    host: Some(Domain("www.rust-lang.org")), 
+                    port: None, path: "/", 
+                    query: None, 
+                    fragment: None 
+                }, 
+                params: Some(Object {}), 
+                headers: {}, 
+                body: None 
+            }, 
+            res: ResponseProfile { 
+                    skip_headers: ["set-cookie", "date", "via", "x-amz-cf-id"], 
+                    skip_body: [] 
+            } 
+        }
+    } 
+}
+
+Args { 
+    action: Run(RunArgs { 
+        profile: "rust", 
+        extra_params: [
+            KeyVal { key_type: Query, key: "a", value: "100" }, 
+            KeyVal { key_type: Body, key: "b", value: "2" }, 
+            KeyVal { key_type: Query, key: "m", value: "10" }
+        ], 
+        config: Some("fixtures/test.yml") 
+    }) 
+}
