@@ -212,14 +212,3 @@ hr: *default
 ```
 那么hr相当于引用了default的数组，注意，hr: *default要写在同一行。
 
-测试样例：cargo run --bin xdiff-live run -p rust -c  fixtures/test.yml -e a=100 -e @b=2 -e m=10
-测试样例：cargo run --bin xdiff-live -- parse
-
-https://jsonplaceholder.typicode.com/todos/1?a=1&b=2
-
-https://jsonplaceholder.typicode.com/todos/2?a=2&b=3
-
-todo
-
-测试样例：cargo run --bin xreq-live -- run -p todo -c fixtures/xreq_test.yml
-
